@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test": "vitest",
     "tauri": "tauri"
   },
   "dependencies": {
@@ -28,6 +29,8 @@
     "typescript": "5.1.6"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.4.0"
+    "@tauri-apps/cli": "^1.4.0",
+    "node-mocks-http": "^1.12.2",
+    "vitest": "^0.34.1"
   }
 }
