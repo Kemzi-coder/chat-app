@@ -6,7 +6,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import {ThemeProvider} from "@mui/material/styles";
 import {useServerInsertedHTML} from "next/navigation";
 import {useState} from "react";
-import {theme} from "@src/utils/theme";
+import {theme} from "@src/lib/theme";
 
 const ThemeRegistry = (props: any) => {
 	const {options, children} = props;
