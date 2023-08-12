@@ -1,5 +1,5 @@
-import {createUser, getUserByUsername} from "@src/lib/prisma/users";
-import {compare, hash} from "bcryptjs";
+import {getUserByEmail} from "@src/lib/prisma/users";
+import {compare} from "bcryptjs";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -8,10 +8,10 @@ const handler = NextAuth({
 		CredentialsProvider({
 			name: "Credentials",
 			credentials: {
-				username: {
-					label: "Username:",
+				email: {
+					label: "Email:",
 					type: "text",
-					placeholder: "Your username"
+					placeholder: "Your email"
 				},
 				password: {
 					label: "Password",
@@ -21,25 +21,19 @@ const handler = NextAuth({
 			},
 			async authorize(credentials) {
 				try {
-					if (!credentials?.username || !credentials?.password) {
-						return null;
+					const {email, password} = credentials || {};
+					if (!email || !password) {
+						throw new Error("Missing email or password.");
 					}
 
-					const {username, password} = credentials;
-
-					const user = await getUserByUsername(username);
+					const user = await getUserByEmail(email);
 					if (user == null) {
-						const hashedPassword = await hash(password, 12);
-						const newUser = await createUser({
-							username,
-							password: hashedPassword
-						});
-						return newUser;
+						throw new Error("Invalid email.");
 					}
 
-					const passwordIsWrong = !(await compare(password, user.password));
-					if (passwordIsWrong) {
-						throw new Error("Wrong password.");
+					const passwordIsInvalid = !(await compare(password, user.password));
+					if (passwordIsInvalid) {
+						throw new Error("Invalid password.");
 					}
 
 					return user;
@@ -49,14 +43,7 @@ const handler = NextAuth({
 				}
 			}
 		})
-	],
-	callbacks: {
-		async session({session, user, token}) {
-			console.log(user);
-
-			return session;
-		}
-	}
+	]
 });
 
 export {handler as GET, handler as POST};
