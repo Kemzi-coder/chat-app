@@ -5,7 +5,7 @@ export default mergeConfig(
 	vitestConfig,
 	defineConfig({
 		test: {
-			include: ["./__tests__/src/**/*.test.ts"],
+			include: ["./__tests__/src/app/api/**/*.test.ts"],
 			singleThread: true
 		}
 	})

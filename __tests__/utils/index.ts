@@ -10,7 +10,7 @@ type RequestOptions = Pick<
 	"method" | "body" | "query" | "headers"
 >;
 
-type ApiRequest = Request & MockRequest<unknown>;
+type ApiRequest = Request & MockRequest<Request>;
 
 const mockRequest = (options?: RequestOptions) => {
 	const req: ApiRequest = createRequest({
