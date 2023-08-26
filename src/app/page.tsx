@@ -1,15 +1,18 @@
-import {Typography} from "@mui/material";
+import Main from "./(home)/Main";
+import Sidebar from "./(home)/(sidebar)/Sidebar";
 import {getServerSession} from "next-auth";
-import SignoutButton from "./(home)/SignoutButton";
+import {getUserByEmail} from "@src/lib/prisma/users";
 
 const Home = async () => {
 	const session = await getServerSession();
-	console.log(session);
+	const user = await getUserByEmail(session?.user?.email!);
 
 	return (
-		<main>
-			<Typography variant="h2">Chat app</Typography>
-			<SignoutButton />
+		<main className="h-screen">
+			<div className="grid grid-cols-[minmax(auto,_350px)_minmax(0,_1fr)] h-full">
+				<Sidebar user={user} />
+				<Main />
+			</div>
 		</main>
 	);
 };

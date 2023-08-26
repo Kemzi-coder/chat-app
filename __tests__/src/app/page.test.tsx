@@ -1,7 +1,7 @@
-import {expect, test} from "vitest";
-import {render, screen} from "@testing-library/react";
 import Home from "@src/app/page";
-import {vi} from "vitest";
+import {render, screen} from "@testing-library/react";
+import {getServerSession} from "next-auth";
+import {Mock, expect, test, vi} from "vitest";
 
 vi.mock("next/navigation", () => ({
 	...require("next-router-mock"),
@@ -9,9 +9,13 @@ vi.mock("next/navigation", () => ({
 	usePathname: vi.fn()
 }));
 
-vi.mock("next-auth");
+vi.mock("next-auth", () => ({
+	getServerSession: vi.fn()
+}));
+const getServerSessionMock = getServerSession as Mock;
 
 test("should render Home page", async () => {
+	getServerSessionMock.mockResolvedValue({user: {email: "a@gmail.com"}});
 	render(await Home());
 
 	expect(screen.getByText("Chat app")).toBeInTheDocument();

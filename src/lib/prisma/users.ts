@@ -20,7 +20,7 @@ const createUser = async ({
 	return user;
 };
 
-const getUserByEmail = async (email: string): Promise<User | null> => {
+const getUserByEmail = async (email: User["email"]): Promise<User | null> => {
 	const user = await prisma.user.findUnique({where: {email}});
 	return user;
 };
