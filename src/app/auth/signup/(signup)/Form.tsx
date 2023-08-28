@@ -1,6 +1,7 @@
 "use client";
 
 import {Button, TextField, Typography} from "@mui/material";
+import {RouteName} from "@src/lib/constants";
 import {useRouter} from "next/navigation";
 import {FormEvent, useState} from "react";
 
@@ -31,7 +32,7 @@ const Form = () => {
 			return;
 		}
 
-		router.push("/auth/signin");
+		router.push(RouteName.SIGNIN);
 	};
 
 	return (

@@ -25,5 +25,12 @@ const getUserByEmail = async (email: User["email"]): Promise<User | null> => {
 	return user;
 };
 
+const getUserByUsername = async (
+	username: User["username"]
+): Promise<User | null> => {
+	const user = await prisma.user.findUnique({where: {username}});
+	return user;
+};
+
 export type {UserPersonalData, UserProfile};
-export {createUser, getUserByEmail};
+export {createUser, getUserByEmail, getUserByUsername};

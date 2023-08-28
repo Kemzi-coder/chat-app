@@ -1,5 +1,6 @@
 import {getToken} from "next-auth/jwt";
 import {NextRequest, NextResponse} from "next/server";
+import {RouteName} from "./lib/constants";
 
 const middleware = async (req: NextRequest) => {
 	const path = req.nextUrl.pathname;
@@ -9,21 +10,23 @@ const middleware = async (req: NextRequest) => {
 		secret: process.env.NEXTAUTH_SECRET
 	});
 
-	if (path.startsWith("/auth")) {
-		if (session) {
-			return NextResponse.redirect(new URL("/", req.url));
-		}
-	} else {
-		if (!session) {
-			return NextResponse.redirect(new URL("/auth/signin", req.url));
-		}
+	const isAuthorized = session !== null;
+	const isAuthRoute = path.startsWith("/auth");
+	const isProtectedRoute = !isAuthRoute;
+
+	if (isAuthRoute && isAuthorized) {
+		return NextResponse.redirect(new URL(RouteName.HOME, req.url));
+	}
+
+	if (isProtectedRoute && !isAuthorized) {
+		return NextResponse.redirect(new URL(RouteName.SIGNIN, req.url));
 	}
 
 	return NextResponse.next();
 };
 
 export const config = {
-	matcher: "/"
+	matcher: "/((?!api|_next|fonts|500|examples|[\\w-]+\\.\\w+).*)"
 };
 
 export {middleware};

@@ -14,7 +14,7 @@ const handler = NextAuth({
 					placeholder: "Your email"
 				},
 				password: {
-					label: "Password",
+					label: "Password:",
 					type: "password",
 					placeholder: "Your password"
 				}

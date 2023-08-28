@@ -1,5 +1,9 @@
 import {User} from "@prisma/client";
-import {createUser, getUserByEmail} from "@src/lib/prisma/users";
+import {
+	createUser,
+	getUserByEmail,
+	getUserByUsername
+} from "@src/lib/prisma/users";
 import {prismaMock} from "@tests/__config__/setups/prismaSetup";
 import {expect, test} from "vitest";
 
@@ -43,6 +47,24 @@ test("should get a user by email", async () => {
 
 	expect(prismaMock.user.findUnique).toHaveBeenCalledWith({
 		where: {email: userMock.email}
+	});
+	expect(user).toStrictEqual(userMock);
+});
+
+test("should get a user by username", async () => {
+	const userMock: User = {
+		id: 1,
+		email: "a@gmail.com",
+		username: "some username",
+		password: "some password",
+		createdAt: new Date()
+	};
+	prismaMock.user.findUnique.mockResolvedValue(userMock);
+
+	const user = await getUserByUsername(userMock.username);
+
+	expect(prismaMock.user.findUnique).toHaveBeenCalledWith({
+		where: {username: userMock.username}
 	});
 	expect(user).toStrictEqual(userMock);
 });
