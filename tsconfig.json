@@ -21,7 +21,8 @@
     ],
     "paths": {
       "@src/*": ["./src/*"],
-      "@tests/*": ["./__tests__/*"]
+      "@tests/*": ["./__tests__/*"],
+      "@mocks/*": ["./mocks/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

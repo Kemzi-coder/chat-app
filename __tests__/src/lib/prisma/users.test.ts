@@ -4,7 +4,7 @@ import {
 	getUserByEmail,
 	getUserByUsername
 } from "@src/lib/prisma/users";
-import {prismaMock} from "@tests/__config__/setups/prismaSetup";
+import {prismaMock} from "@mocks/prisma";
 import {expect, test} from "vitest";
 
 test("should create a new user", async () => {

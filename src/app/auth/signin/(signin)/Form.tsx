@@ -35,6 +35,7 @@ const Form = () => {
 
 	return (
 		<form
+			aria-label="signin"
 			onSubmit={handleSubmit}
 			className="flex flex-col items-start max-w-[300px] w-full">
 			{error ? (

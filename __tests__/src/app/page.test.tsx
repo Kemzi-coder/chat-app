@@ -3,12 +3,6 @@ import {render, screen} from "@testing-library/react";
 import {getServerSession} from "next-auth";
 import {Mock, expect, test, vi} from "vitest";
 
-vi.mock("next/navigation", () => ({
-	...require("next-router-mock"),
-	useSearchParams: vi.fn(),
-	usePathname: vi.fn()
-}));
-
 vi.mock("next-auth", () => ({
 	getServerSession: vi.fn()
 }));

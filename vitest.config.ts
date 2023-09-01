@@ -6,7 +6,8 @@ export default defineConfig({
 	resolve: {
 		alias: [
 			{find: "@src", replacement: path.resolve(__dirname, "./src")},
-			{find: "@tests", replacement: path.resolve(__dirname, "./__tests__")}
+			{find: "@tests", replacement: path.resolve(__dirname, "./__tests__")},
+			{find: "@mocks", replacement: path.resolve(__dirname, "./mocks")}
 		]
 	}
 });
